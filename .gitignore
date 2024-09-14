@@ -1,0 +1,27 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Caching directories
+.cache/
+.cache/
+.idea/
+
+# Distribution / packaging
+build/
+dist/
+*.egg-info/
+*.egg/
+*.build/
+*.pyc
+*.pyo
+*.pyd
+
+# Editor directories and files
+.vscode/
+*.swp
+.DS_Store
+
+# Target output files
+target/*
