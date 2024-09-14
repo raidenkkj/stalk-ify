@@ -53,7 +53,7 @@ class CustomHelpFormatter(argparse.HelpFormatter):
 def main():
     init()
 
-    usage_msg = 'stalkify [--help | -h] [--analysis | -a TARGET_USERNAME] [--get_info | -g TARGET_USERNAME] [--compare | -c]'
+    usage_msg = 'stalkify [--help | -h] [--analysis | -a TARGET_USERNAME] [--get_info | -g TARGET_USERNAME] [--compare | -c] [--login | -l ]'
 
     parser = argparse.ArgumentParser(
         description='A tool that uses the instaloader library to increase your stalking level.',
