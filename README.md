@@ -94,8 +94,6 @@ Activate (windows):
 
 ## Usage
 
-> **Note:** Currently, **Stalk-ify** only works correctly if it is run from the cloned repository directory. Otherwise, behavior may be unpredictable or generate errors.
-
 Run via command line:
 
 After installation, inside the cloned directory, you can use the command below to run **Stalk-ify:**

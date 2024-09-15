@@ -50,6 +50,35 @@ class CustomHelpFormatter(argparse.HelpFormatter):
                 parts[-1] += f' {args_string}'
             return ', '.join(parts)
 
+def check_project_directory(base_dir):
+    required_files = [
+        'src/__init__.py',
+        'src/__main__.py',
+        'src/compare.py',
+        'src/get_info.py',
+        'src/login.py',
+    ]
+
+    for item in required_files:
+        path = os.path.join(base_dir, item)
+        if not os.path.exists(path):
+            print(Fore.RED + f"[Monitor] Arquivo ou diretório essencial '{item}' não encontrado no diretório: {base_dir}" + Style.RESET_ALL)
+            return False
+    return True
+
+def update_config_file(config_path, directory_path):
+    config = configparser.ConfigParser()
+    
+    if os.path.exists(config_path):
+        config.read(config_path)
+    
+    if 'directory' not in config:
+        config.add_section('directory')
+    config.set('directory', 'path', directory_path)
+
+    with open(config_path, 'w') as config_file:
+        config.write(config_file)
+
 def main():
     init()
 
@@ -75,20 +104,44 @@ def main():
     if not any(vars(args).values()):
         parser.print_help()
         parser.exit()
-
+    
+    config_path = os.path.expanduser('~/.config/stalkify/config.ini')
     current_dir = os.getcwd()
-    target_dir = os.path.join(current_dir, 'target')
+
+    config = configparser.ConfigParser()
+
+    if os.path.exists(config_path):
+        config.read(config_path)
+        if 'directory' in config and 'path' in config['directory']:
+            saved_path = config['directory']['path']
+            if os.path.exists(saved_path):
+                base_dir = saved_path
+            else:
+                base_dir = current_dir
+        else:
+            base_dir = current_dir
+    else:
+        base_dir = current_dir
+    
+    if check_project_directory(base_dir):
+        if not os.path.exists(config_path) or 'directory' not in config or 'path' not in config['directory']:
+            update_config_file(config_path, base_dir)
+    else:
+        print(Fore.RED + "[Monitor] Invalid project directory. Please check the directory and try again." + Style.RESET_ALL)
+        sys.exit(1)
+
+    target_dir = os.path.join(base_dir, 'target')
 
     if args.login:
        try:
-           subprocess.run(['python', os.path.join(current_dir, 'src', 'login.py')], check=True)
+           subprocess.run(['python', os.path.join(base_dir, 'src', 'login.py')], check=True)
        except FileNotFoundError:
            print(Fore.RED + "[-] Login script not found in ./src directory." + Style.RESET_ALL)
        return
 
     if args.compare:
         try:
-            subprocess.run(['python', os.path.join(current_dir, 'src', 'compare.py')], check=True)
+            subprocess.run(['python', os.path.join(base_dir, 'src', 'compare.py')], check=True)
         except FileNotFoundError:
             print(Fore.RED + "[-] Comparison script not found in ./src directory." + Style.RESET_ALL)
         return
