@@ -108,7 +108,7 @@ Options:
 
 > -a, --analysis TARGET_USERNAME: Analyzes the target user to collect information from Instagram.
 
-> -g, --get_info TARGET_USERNAME: Collects information from the target user's Instagram profile. (in development)
+> -e, --extra_info: Used as a sub argument it collects extra information and generates a report file.'
 
 > -c, --compare: Compares previously performed analyses.
 
@@ -124,7 +124,7 @@ stalkify --analysis raidenkkj
 Or to collect detailed information:
 
 ```bash
-stalkify --get_info raidenkkj
+stalkify --anaylis raidenkkj --extra_info
 ```
 
 If you want to compare previous analyses:

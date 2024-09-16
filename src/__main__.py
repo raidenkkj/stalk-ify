@@ -55,7 +55,6 @@ def check_project_directory(base_dir):
         'src/__init__.py',
         'src/__main__.py',
         'src/compare.py',
-        'src/get_info.py',
         'src/login.py',
     ]
 
@@ -92,8 +91,8 @@ def main():
 
     parser.add_argument('--analysis', '-a', type=str, metavar='TARGET_USERNAME',
                         help='analyzes target user to collect information from instagram.')
-    parser.add_argument('--get_info', '-g', type=str, metavar='TARGET_USERNAME',
-                        help='collects informations from target user\'s instagram.')
+    parser.add_argument('--extra_infos', '-e', action='store_true',
+                    help='Collects extra information and generates a report file.')
     parser.add_argument('--compare', '-c', action='store_true',
                         help='compare previously performed analyses.')
     parser.add_argument('--login', '-l', action='store_true',
@@ -213,6 +212,32 @@ def main():
             report_file.write(f"{followee.username}\n")
 
     print(Fore.BLUE + "[#] Report generated successfully at: " + report_filename + Style.RESET_ALL)
+   
+    if args.extra_infos:
+        username = profile.username
+        full_name = profile.full_name
+        bio = profile.biography
+        followers = profile.followers
+        followees = profile.followees
+        posts = profile.mediacount
+        is_private = profile.is_private
+        is_verified = profile.is_verified
+
+    
+        extras_dir = os.path.join(profile_dir, 'extras')
+        os.makedirs(extras_dir, exist_ok=True)
+        extras_filename = os.path.join(extras_dir, f'extra_infos_{now}.txt')
+        with open(extras_filename, 'w') as extras:
+            extras.write(f"[+] Username: {username}\n")
+            extras.write(f"[+] Name: {full_name}\n")
+            extras.write(f"[+] Bio: {bio}\n")
+            extras.write(f"[+] Followers: {followers}\n")
+            extras.write(f"[+] Following: {followees}\n")
+            extras.write(f"[+] Number of posts: {posts}\n")
+            extras.write(f"[+] Private profile: {'Yes' if is_private else 'No'}\n")
+            extras.write(f"[+] Verified profile: {'Yes' if is_verified else 'No'}\n")
+        print(" ")
+        print(Fore.GREEN + f"[+] Extra information saved at {extras_filename}\n" + Style.RESET_ALL)
 
 if __name__ == "__main__":
     main()
