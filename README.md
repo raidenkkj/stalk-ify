@@ -124,7 +124,7 @@ stalkify --analysis raidenkkj
 Or to collect detailed information:
 
 ```bash
-stalkify --anaylis raidenkkj --extra_info
+stalkify --analysis raidenkkj --extra_info
 ```
 
 If you want to compare previous analyses:

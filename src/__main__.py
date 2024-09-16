@@ -92,7 +92,7 @@ def main():
     parser.add_argument('--analysis', '-a', type=str, metavar='TARGET_USERNAME',
                         help='analyzes target user to collect information from instagram.')
     parser.add_argument('--extra_infos', '-e', action='store_true',
-                    help='Collects extra information and generates a report file.')
+                    help='collects extra information and generates a report file.')
     parser.add_argument('--compare', '-c', action='store_true',
                         help='compare previously performed analyses.')
     parser.add_argument('--login', '-l', action='store_true',
